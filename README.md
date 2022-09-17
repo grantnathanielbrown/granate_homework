@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+Design and build an app that displays a list of restaurants. Each restaurant has a name, cuisine type, and star ranking. The user should be able to search by restaurant name, filter restaurants by cuisine type, and sort by star ranking. This may be a web app or native app. The app does not need to be deployed anywhere but it should be able to run locally.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+I’m designing this with the premise that it is simulating how an app would really work.
 
-## Available Scripts
+Comments on everything
 
-In the project directory, you can run:
+Add mock server?
 
-### `npm start`
+Need input validation for search
+Need loading spinner for search
+X results found
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+For results, you store all results from search. Any reordering or filtering that happens, you clone the results then run those operations on the clone
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+TESTS
 
-### `npm test`
+Basic text appears
+SearchBar appears
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Input phrase x into searchbar
+-handleChange is called for each input
+-valid inputs are actually displayed
+-invalid inputs don’t work
 
-### `npm run build`
+Input phrase x into SearchBar, press Search
+-little window mounts
+-startSearch is called
+-If startSearch gets called on SearchBar, LoadingSpinner mounts, then unmounts when SearchResults appear
+-SearchResults commensurate with search phrase are displayed (use snapshot perhaps?)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+COMPONENTS
 
-### `npm run eject`
+App
+Index
+LoadingSpinner
+SearchBar
+SearchResults?
+RestaurantListing
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
