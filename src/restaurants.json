@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "North Beach Sushi",
+        "cuisineType": "Sushi",
+        "stars": 4
+    },
+    {
+        "id": 2,
+        "name": "Red Door",
+        "cuisineType": "Italian",
+        "stars": 3
+    },
+    {
+        "id": 3,
+        "name": "Ben Thai",
+        "cuisineType": "Thai",
+        "stars": 5
+    },
+    {
+        "id": 4,
+        "name": "Sushi Go Go",
+        "cuisineType": "Sushi",
+        "stars": 3
+    },
+    {
+        "id": 5,
+        "name": "Palmetto",
+        "cuisineType": "French",
+        "stars": 4
+    },
+    {
+        "id": 6,
+        "name": "Taste of Thai",
+        "cuisineType": "Thai",
+        "stars": 3
+    },
+    {
+        "id": 7,
+        "name": "I-Pot",
+        "cuisineType": "Hot pot",
+        "stars": 4
+    },
+    {
+        "id": 8,
+        "name": "Bonita Taqueria",
+        "cuisineType": "Mexican",
+        "stars": 5
+    },
+    {
+        "id": 9,
+        "name": "Sushi Taro",
+        "cuisineType": "Sushi",
+        "stars": 5
+    },
+    {
+        "id": 10,
+        "name": "Cantina",
+        "cuisineType": "Mexican",
+        "stars": 3
+    }
+]
