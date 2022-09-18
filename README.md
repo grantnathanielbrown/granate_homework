@@ -34,7 +34,6 @@ COMPONENTS
 
 App
 Index
-LoadingSpinner
 SearchBar
 SearchResults?
 RestaurantListing

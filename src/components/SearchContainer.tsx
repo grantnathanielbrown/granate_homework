@@ -14,6 +14,7 @@ export interface Restaurant {
 
 export default function SearchContainer() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(false);
     const [searchResults, setSearchResults] = useState<Restaurant[]>([]);
 
     const options = {
@@ -39,17 +40,27 @@ export default function SearchContainer() {
       const fuse = new Fuse(restaurants, options);
 
     function submitSearch(): void {
-        console.log(fuse.search(searchTerm));
-        const results = fuse.search(searchTerm).map( (restaurant: Fuse.FuseResult<Restaurant>) => {
-            return restaurant.item;
+        setLoading(true);
+        const mockServer = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("Success!");
+          }, 1000);
         });
-        setSearchResults(results);
+        
+        mockServer.then(() => {
+          console.log(fuse.search(searchTerm));
+          const results = fuse.search(searchTerm).map( (restaurant: Fuse.FuseResult<Restaurant>) => {
+              return restaurant.item;
+          });
+          setLoading(false);
+          setSearchResults(results);
+        });
 
     }
   return (
     <div>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} submitSearch={submitSearch}/>
-        <SearchResultsContainer searchResults={searchResults} />
+        <SearchResultsContainer searchResults={searchResults} loading={loading} />
     </div>
   )
 }
