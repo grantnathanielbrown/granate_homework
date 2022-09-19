@@ -4,11 +4,14 @@ import SearchResultsContainer from './SearchResultsContainer';
 import restaurants from '../restaurants.json';
 import Fuse from 'fuse.js';
 
-export interface Restaurant {
+interface Restaurant {
     id: number;
     name: string;
     cuisineType: string;
     stars: number;
+}
+export interface hideableRestaurant extends Restaurant {
+  displayed: boolean;
 }
 
 export interface filterableCuisine {
@@ -20,7 +23,7 @@ export interface filterableCuisine {
 export default function SearchContainer() {
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false);
-    const [searchResults, setSearchResults] = useState<Restaurant[]>([]);
+    const [searchResults, setSearchResults] = useState<hideableRestaurant[]>([]);
     const [filterableCuisines, setFilterableCuisines] = useState<filterableCuisine[]>([]);
 
     const options = {
@@ -44,28 +47,43 @@ export default function SearchContainer() {
         
         mockServer.then(() => {
           console.log(fuse.search(searchTerm));
-          const restaurants = fuse.search(searchTerm).map( (result: Fuse.FuseResult<Restaurant>) => {
-            return result.item;
-          });
-          const filterableCuisines = restaurants.map((restaurant: Restaurant) => {
-            return {
-              cuisineType: restaurant.cuisineType,
-              checked: true
-            };
+          const hideableRestaurants = fuse.search(searchTerm).map( (result: Fuse.FuseResult<Restaurant>) => {
+            return {...result.item, displayed: true};
           });
 
+          let cuisines: string[] = []; 
+          hideableRestaurants.forEach((hideableRestaurant: hideableRestaurant) => {
+            if (!cuisines.includes(hideableRestaurant.cuisineType)) {
+              cuisines.push(hideableRestaurant.cuisineType);
+            }
+          })
+
+          const uniqueFilterableCuisines = cuisines.map( (cuisine: string) => {
+            return {
+              cuisineType: cuisine,
+              checked: true
+            }
+          })
+
           setLoading(false);
-          setSearchResults(restaurants);
-          setFilterableCuisines(filterableCuisines);
+          setSearchResults(hideableRestaurants);
+          setFilterableCuisines(uniqueFilterableCuisines);
         });
 
     }
 
-    function toggleFilter(event: React.ChangeEvent<HTMLInputElement>, index: number): void {
-      const clone = [...filterableCuisines];
-      clone[index].checked = event.target.checked;
-      console.log(clone);
-      setFilterableCuisines(clone);
+    function toggleFilter(event: React.ChangeEvent<HTMLInputElement>, cuisineType: string, index: number): void {
+      const cuisineClone = [...filterableCuisines];
+      cuisineClone[index].checked = event.target.checked;
+      setFilterableCuisines(cuisineClone);
+
+      const searchResultsClone = [...searchResults];
+      searchResultsClone.forEach((hideableRestaurant: hideableRestaurant) => {
+        if (hideableRestaurant.cuisineType === cuisineType) {
+          hideableRestaurant.displayed = event.target.checked;
+        }
+      });
+
     }
 
 

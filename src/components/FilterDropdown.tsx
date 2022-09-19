@@ -4,7 +4,7 @@ import { filterableCuisine } from './SearchContainer';
 
 interface FilterDropdownProps {
     filterableCuisines: filterableCuisine[];
-    toggleFilter: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+    toggleFilter: (event: React.ChangeEvent<HTMLInputElement>, cuisineType: string, index: number) => void;
 }
 
 export default function FilterDropdown(props: FilterDropdownProps) {
@@ -12,7 +12,7 @@ export default function FilterDropdown(props: FilterDropdownProps) {
         return (
             <FormControlLabel key={index} label={filterableCuisine.cuisineType} control={
                 <Checkbox color="primary"
-                    onChange={(e) => props.toggleFilter(e, index)}    
+                    onChange={(e) => {props.toggleFilter(e, filterableCuisine.cuisineType, index); }}    
                     checked={props.filterableCuisines[index].checked}
                 />
                 } 

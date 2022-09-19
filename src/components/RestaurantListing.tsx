@@ -1,17 +1,17 @@
 import React from 'react';
-import { Restaurant } from './SearchContainer';
+import { hideableRestaurant } from './SearchContainer';
 
 interface RestaurantListingProps {
-    restaurant: Restaurant;
+    hideableRestaurant: hideableRestaurant;
     key: number;
 }
 
 export default function RestaurantListing(props: RestaurantListingProps) {
   return (
     <li className="flex flex-row">
-        <span>{props.restaurant.name}</span>
-        <span>{props.restaurant.cuisineType}</span>
-        <span>{props.restaurant.stars}</span>
+        <span className="mr-8">{props.hideableRestaurant.name}</span>
+        <span className="mr-8">{props.hideableRestaurant.cuisineType}</span>
+        <span className="">{props.hideableRestaurant.stars}</span>
     </li>
   )
 }
