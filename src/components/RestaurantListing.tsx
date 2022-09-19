@@ -9,7 +9,6 @@ interface RestaurantListingProps {
 export default function RestaurantListing(props: RestaurantListingProps) {
   return (
     <li className="flex flex-row">
-        {/* <img src="dinosaur.jpg" alt="Dinosaur" /> */}
         <span>{props.restaurant.name}</span>
         <span>{props.restaurant.cuisineType}</span>
         <span>{props.restaurant.stars}</span>

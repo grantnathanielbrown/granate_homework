@@ -4,7 +4,7 @@ export default function App() {
 
   return (
     <div className="App">
-      hi
+      Where are we going to eat?
       <SearchContainer />
     </div>
   );

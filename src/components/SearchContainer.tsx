@@ -11,26 +11,21 @@ export interface Restaurant {
     stars: number;
 }
 
+export interface filterableCuisine {
+  cuisineType: string;
+  checked: boolean;
+}
+
 
 export default function SearchContainer() {
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false);
     const [searchResults, setSearchResults] = useState<Restaurant[]>([]);
+    const [filterableCuisines, setFilterableCuisines] = useState<filterableCuisine[]>([]);
 
     const options = {
-        // isCaseSensitive: false,
         includeScore: true,
         threshold: 0.4,
-        // shouldSort: true,
-        // includeMatches: false,
-        // findAllMatches: false,
-        // minMatchCharLength: 1,
-        // location: 0,
-        // distance: 100,
-        // useExtendedSearch: false,
-        // ignoreLocation: false,
-        // ignoreFieldNorm: false,
-        // fieldNormWeight: 1,
         keys: [
           "name",
           "cuisineType"
@@ -49,18 +44,35 @@ export default function SearchContainer() {
         
         mockServer.then(() => {
           console.log(fuse.search(searchTerm));
-          const results = fuse.search(searchTerm).map( (restaurant: Fuse.FuseResult<Restaurant>) => {
-              return restaurant.item;
+          const restaurants = fuse.search(searchTerm).map( (result: Fuse.FuseResult<Restaurant>) => {
+            return result.item;
           });
+          const filterableCuisines = restaurants.map((restaurant: Restaurant) => {
+            return {
+              cuisineType: restaurant.cuisineType,
+              checked: true
+            };
+          });
+
           setLoading(false);
-          setSearchResults(results);
+          setSearchResults(restaurants);
+          setFilterableCuisines(filterableCuisines);
         });
 
     }
+
+    function toggleFilter(event: React.ChangeEvent<HTMLInputElement>, index: number): void {
+      const clone = [...filterableCuisines];
+      clone[index].checked = event.target.checked;
+      console.log(clone);
+      setFilterableCuisines(clone);
+    }
+
+
   return (
     <div>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} submitSearch={submitSearch}/>
-        <SearchResultsContainer searchResults={searchResults} loading={loading} />
+        <SearchResultsContainer searchResults={searchResults} filterableCuisines={filterableCuisines} toggleFilter={toggleFilter} loading={loading} />
     </div>
   )
 }
