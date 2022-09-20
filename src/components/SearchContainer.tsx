@@ -11,6 +11,7 @@ export interface hideableRestaurant {
     stars: number;
     imageUrl: string;
     displayed?: boolean;
+    score?: number;
 }
 
 export interface filterableCuisine {
@@ -20,10 +21,11 @@ export interface filterableCuisine {
 
 
 export default function SearchContainer() {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(false);
     const [searchResults, setSearchResults] = useState<hideableRestaurant[]>([]);
     const [filterableCuisines, setFilterableCuisines] = useState<filterableCuisine[]>([]);
+    const [sort, setSort] = useState("Relevance");
 
     const options = {
         includeScore: true,
@@ -38,7 +40,7 @@ export default function SearchContainer() {
 
     function submitSearch(): void {
         setLoading(true);
-        const mockServer = new Promise((resolve, reject) => {
+        const mockServer = new Promise((resolve) => {
           setTimeout(() => {
             resolve("Success!");
           }, 1000);
@@ -47,7 +49,7 @@ export default function SearchContainer() {
         mockServer.then(() => {
           console.log(fuse.search(searchTerm));
           const hideableRestaurants = fuse.search(searchTerm).map( (result: Fuse.FuseResult<hideableRestaurant>) => {
-            return {...result.item, displayed: true};
+            return {...result.item, displayed: true, score: result.score};
           });
 
           let cuisines: string[] = []; 
@@ -72,24 +74,40 @@ export default function SearchContainer() {
     }
 
     function toggleFilter(event: React.ChangeEvent<HTMLInputElement>, cuisineType: string, index: number): void {
-      const cuisineClone = [...filterableCuisines];
+      const cuisineClone = structuredClone(filterableCuisines);
       cuisineClone[index].checked = event.target.checked;
       setFilterableCuisines(cuisineClone);
 
-      const searchResultsClone = [...searchResults];
+      const searchResultsClone = structuredClone(searchResults);
       searchResultsClone.forEach((hideableRestaurant: hideableRestaurant) => {
         if (hideableRestaurant.cuisineType === cuisineType) {
           hideableRestaurant.displayed = event.target.checked;
         }
       });
+      setSearchResults(searchResultsClone);
 
+    }
+
+    function toggleSort(sortPreference: string): void {
+      const searchResultsClone = structuredClone(searchResults);
+      searchResultsClone.sort((a: hideableRestaurant, b: hideableRestaurant) => {
+        if (sortPreference === "Relevance" && a.score && b.score) {
+          return a.score - b.score;
+        }
+        else {
+          return b.stars - a.stars;
+        } 
+      });
+      
+      setSort(sortPreference);
+      setSearchResults(searchResultsClone);
     }
 
 
   return (
     <div>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} submitSearch={submitSearch}/>
-        <SearchResultsContainer searchResults={searchResults} filterableCuisines={filterableCuisines} toggleFilter={toggleFilter} loading={loading} />
+        <SearchResultsContainer searchResults={searchResults} filterableCuisines={filterableCuisines} sort={sort} toggleFilter={toggleFilter} toggleSort={toggleSort} loading={loading} />
     </div>
   )
 }
