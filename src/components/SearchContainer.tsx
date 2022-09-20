@@ -4,14 +4,13 @@ import SearchResultsContainer from './SearchResultsContainer';
 import restaurants from '../restaurants.json';
 import Fuse from 'fuse.js';
 
-interface Restaurant {
+export interface hideableRestaurant {
     id: number;
     name: string;
     cuisineType: string;
     stars: number;
-}
-export interface hideableRestaurant extends Restaurant {
-  displayed: boolean;
+    imageUrl: string;
+    displayed?: boolean;
 }
 
 export interface filterableCuisine {
@@ -47,7 +46,7 @@ export default function SearchContainer() {
         
         mockServer.then(() => {
           console.log(fuse.search(searchTerm));
-          const hideableRestaurants = fuse.search(searchTerm).map( (result: Fuse.FuseResult<Restaurant>) => {
+          const hideableRestaurants = fuse.search(searchTerm).map( (result: Fuse.FuseResult<hideableRestaurant>) => {
             return {...result.item, displayed: true};
           });
 

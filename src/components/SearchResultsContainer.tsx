@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, ToggleButton } from '@mui/material';
 import React from 'react';
 import FilterDropdown from './FilterDropdown';
 import RestaurantListing from './RestaurantListing';
@@ -15,21 +15,29 @@ interface SearchResultsContainerProps {
 export default function SearchResultsContainer(props: SearchResultsContainerProps) {
 
   let searchResults;
-  props.searchResults.length ? searchResults = 
-    <div>
-      <FilterDropdown filterableCuisines={props.filterableCuisines} toggleFilter={props.toggleFilter} />
-      
-      <ul>
-        {props.searchResults.filter(hideableRestaurant => hideableRestaurant.displayed).map((hideableRestaurant: hideableRestaurant) => {
-          return (
-            <RestaurantListing hideableRestaurant={hideableRestaurant} key={hideableRestaurant.id} />
-          )
-        }) }
-      </ul>
-    </div>
-  : searchResults = "No results found.";
+  if (props.searchResults.length) {
+    searchResults = 
+      <>
+      <span className="mr-8">Restaurant Name</span><span className="mr-8">Cuisine</span><span>Rating</span>
+        <FilterDropdown filterableCuisines={props.filterableCuisines} toggleFilter={props.toggleFilter} />
+        {/* <ToggleButtonGroup
+        
+        >
+          <ToggleButton>Sort by Rating</ToggleButton>
+          <ToggleButton>Sort by Rating</ToggleButton>
+        </ToggleButtonGroup> */}
+        <ul>
+          {props.searchResults.filter(hideableRestaurant => hideableRestaurant.displayed).map((hideableRestaurant: hideableRestaurant) => {
+            return (
+              <RestaurantListing hideableRestaurant={hideableRestaurant} key={hideableRestaurant.id} />
+            )
+          }) }
+        </ul>
+      </>
+  } 
+  
   return (
-    <div>
+    <div className="bg-slate-100 min-h-80 rounded-xl">
       {props.loading ? <CircularProgress /> : searchResults}
     </div>
   )

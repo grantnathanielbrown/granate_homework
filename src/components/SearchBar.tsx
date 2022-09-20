@@ -16,8 +16,8 @@ export default function SearchBar(props: SearchBarProps) {
   return (
     <div>
       {/* Not doing extra input validation because restaurants can have weird names, and event.target.value will always be a string */}
-        <input className="border-2" type="text" value={props.searchTerm} onChange={handleChange} />
-        <button className="border-2 border-violet-400" type="submit" onClick={props.submitSearch}>Search</button>
+        <input className="border-2 rounded-xl my-4 mr-4" type="text" value={props.searchTerm} onChange={handleChange} />
+        <button className="border-2 rounded-xl bg-violet-400 h-9 px-1" type="submit" onClick={props.submitSearch}>Search</button>
     </div>
   )
 }
