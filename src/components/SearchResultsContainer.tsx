@@ -1,6 +1,6 @@
 import { Button, CircularProgress, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import React from 'react';
-import FilterDropdown from './FilterDropdown';
+import CuisineFilters from './CuisineFilters';
 import RestaurantListing from './RestaurantListing';
 import { filterableCuisine, hideableRestaurant } from './SearchContainer';
 interface SearchResultsContainerProps {
@@ -20,12 +20,12 @@ export default function SearchResultsContainer(props: SearchResultsContainerProp
   if (props.searchResults.length) {
     searchResults = 
       <>
-      <span className="mr-8">Restaurant Name</span><span className="mr-8">Cuisine</span><span>Rating</span>
-        <FilterDropdown filterableCuisines={props.filterableCuisines} toggleFilter={props.toggleFilter} />
+        <CuisineFilters filterableCuisines={props.filterableCuisines} toggleFilter={props.toggleFilter} />
         <Stack spacing={2} direction="row">
           <Button onClick={() => props.toggleSort("Relevance")} variant={props.sort === "Relevance" ? "contained": "outlined"}>Sort by Relevance</Button>
           <Button onClick={() => props.toggleSort("Rating")} variant={props.sort === "Rating" ? "contained": "outlined"}>Sort by Rating</Button>
         </Stack>
+      <span className="font-bold mr-8">Restaurant Name</span><span className="font-bold mr-8">Cuisine</span><span className="font-bold ">Rating</span>
         <ul>
           {props.searchResults.filter(hideableRestaurant => hideableRestaurant.displayed).map((hideableRestaurant: hideableRestaurant) => {
             return (
@@ -37,7 +37,7 @@ export default function SearchResultsContainer(props: SearchResultsContainerProp
   } 
   
   return (
-    <div className="bg-slate-100 min-h-80 rounded-xl p-4">
+    <div className={`bg-slate-100 min-h-80 rounded-xl p-4 ${props.loading ? "flex justify-center items-center" : ""}`}>
       {props.loading ? <CircularProgress /> : searchResults}
     </div>
   )

@@ -4,8 +4,6 @@ For the most part, I have designed this with the intention of simulating how an 
 
 Comments on everything
 
-X results found
-
 TESTS
 
 Basic text appears

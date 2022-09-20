@@ -2,12 +2,12 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import React from 'react';
 import { filterableCuisine } from './SearchContainer';
 
-interface FilterDropdownProps {
+interface cuisineFiltersProps {
     filterableCuisines: filterableCuisine[];
     toggleFilter: (event: React.ChangeEvent<HTMLInputElement>, cuisineType: string, index: number) => void;
 }
 
-export default function FilterDropdown(props: FilterDropdownProps) {
+export default function CuisineFilters(props: cuisineFiltersProps) {
     const filterableCuisines = props.filterableCuisines.map( (filterableCuisine: filterableCuisine, index: number) => {
         return (
             <FormControlLabel key={index} label={filterableCuisine.cuisineType} control={
