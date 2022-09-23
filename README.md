@@ -2,7 +2,7 @@ Design and build an app that displays a list of restaurants. Each restaurant has
 
 For the most part, I have designed this with the intention of simulating how an actual application would work.
 
-TESTS
+more testing
 
 Basic text appears
 SearchBar appears
