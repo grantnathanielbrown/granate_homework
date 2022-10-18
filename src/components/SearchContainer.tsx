@@ -19,7 +19,6 @@ export interface filterableCuisine {
   checked: boolean;
 }
 
-// Even more testing
 export default function SearchContainer() {
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(false);
